@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: finfak_help_bot
+      POSTGRES_USER: finfak_help
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  bot:
+    build: .
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
